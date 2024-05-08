@@ -7,7 +7,6 @@ const bot = new TelegramBot(token, { polling: true });
 
 bot.on("message", (msg) => {
     const chatId = msg.chat.id;
-    // Kirim pesan balasan
     bot.sendMessage(chatId, "Terima kasih telah mengirim pesan: '" + msg.text + "'");
 });
 
