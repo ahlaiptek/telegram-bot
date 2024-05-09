@@ -1,6 +1,5 @@
 class Kuis {
     constructor(data) {
-        console.log(data)
         this.question = data["Pertanyaan"];
         this.options = [
             data["Opsi 1"],

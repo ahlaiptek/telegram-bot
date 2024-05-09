@@ -1,3 +1,5 @@
+const os = require("os");
+
 require("dotenv").config();
 const utils = require("./utils");
 const { Kuis } = require("./models");
@@ -6,6 +8,30 @@ const { Kuis } = require("./models");
 function handleStart(msg, bot) {
     const chatId = msg.chat.id;
     bot.sendMessage(chatId, "Halo! Saya adalah bot Anda yang baru. Silakan kirimkan pesan kepada saya.");
+}
+
+// Tangani perintah "/device"
+function handleDevice(msg, bot) {
+    const chatId = msg.chat.id;
+    // Format informasi CPU
+    const cpuInfo = `CPU Info:
+    Model: ${os.cpus()[0].model}
+    Cores: ${os.cpus().length}`;
+
+    // Format informasi RAM
+    const ramInfo = `RAM Info:
+    Total Memory: ${(os.totalmem() / (1024 * 1024 * 1024)).toFixed(2)} GB
+    Free Memory: ${(os.freemem() / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+
+    // Format informasi Sistem Operasi
+    const osInfo = `OS Info:
+    Type: ${os.type()}
+    Platform: ${os.platform()}
+    Architecture: ${os.arch()}`;
+
+    // Gabungkan semua informasi menjadi satu string
+    const deviceInfo = `${cpuInfo}\n${ramInfo}\n${osInfo}`;
+    bot.sendMessage(chatId, deviceInfo);
 }
 
 // Tangani perintah "/about"
@@ -24,6 +50,7 @@ async function handleQuiz(msg, bot, url) {
     const chatId = msg.chat.id;
 
     // Menampilkan opsi topik
+    console.log(quiz)
     let question = "Pilih topik: ";
     let options = quiz.map(item => item.topic);
     bot.sendMessage(chatId, question, {
@@ -87,6 +114,7 @@ function handleHelp(msg, bot) {
         "/start - Memulai bot",
         "/help - Menampilkan daftar perintah",
         "/about - Menampilkan informasi tentang bot",
+        "/device - Menampilkan spesifikasi perangkat",
         "/ibnu_aqil",
         "/tafsir_munir"
         // Tambahkan perintah lain di sini
@@ -102,6 +130,7 @@ function initializeCommands(bot) {
     bot.onText(/\/start/, (msg) => handleStart(msg, bot));
     bot.onText(/\/about/, (msg) => handleAbout(msg, bot));
     bot.onText(/\/help/, (msg) => handleHelp(msg, bot));
+    bot.onText(/\/device/, (msg) => handleDevice(msg, bot));
     bot.onText(/\/ibnu_aqil/, (msg) => handleIbnuAqil(msg, bot, process.env.IBNU_AQIL));
     bot.onText(/\/tafsir_munir/, (msg) => handleIbnuAqil(msg, bot, process.env.TAFSIR_MUNIR));
 }
