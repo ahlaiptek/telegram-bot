@@ -50,9 +50,13 @@ async function handleQuiz(msg, bot, url) {
     const chatId = msg.chat.id;
 
     // Menampilkan opsi topik
-    console.log(quiz)
     let question = "Pilih topik: ";
     let options = quiz.map(item => item.topic);
+    function removeDuplicates(array) {
+        return array.filter((item, index) => array.indexOf(item) === index);
+    }
+    options = removeDuplicates(options);
+
     bot.sendMessage(chatId, question, {
         reply_markup: {
             keyboard: options.map(option => [{ text: option }]),
@@ -70,12 +74,12 @@ async function handleQuiz(msg, bot, url) {
 
                 // Random
                 quiz.sort(() => Math.random() - 0.5);
+                bot.sendMessage(chatId, 'Terdapat sebanyak ' + quiz.length + ' data');
+
                 quiz = quiz[0];
-                console.log(quiz)
 
                 question = quiz.question;
                 options = quiz.options;
-                console.log(options)
                 await bot.sendMessage(chatId, question, {
                     reply_markup: {
                         keyboard: options.map(option => [{ text: option }]),
@@ -95,6 +99,8 @@ async function handleQuiz(msg, bot, url) {
                         bot.sendMessage(chatId, 'Maaf, jawaban anda salah!');
                         bot.sendMessage(chatId, 'Jawaban yang benar adalah:\n' + quiz.options[quiz.answer - 1]);
                     }
+
+                    bot.sendMessage(chatId, 'Ketika selesai silahkan kembali \n/help');
                 });
             }
         }
