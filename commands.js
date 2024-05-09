@@ -118,7 +118,8 @@ function handleHelp(msg, bot) {
         "/device - Menampilkan spesifikasi perangkat",
         "/tematik - Tematik Alquran",
         "/ibnu_aqil",
-        "/tafsir_munir"
+        "/tafsir_munir",
+        "/minhaj_thalibin"
         // Tambahkan perintah lain di sini
     ];
     // Gabungkan daftar perintah menjadi satu pesan dengan baris baru
@@ -136,5 +137,6 @@ function initializeCommands(bot) {
     bot.onText(/\/tematik/, (msg) => handleQuiz(msg, bot, process.env.TEMATIK));
     bot.onText(/\/ibnu_aqil/, (msg) => handleQuiz(msg, bot, process.env.IBNU_AQIL));
     bot.onText(/\/tafsir_munir/, (msg) => handleQuiz(msg, bot, process.env.TAFSIR_MUNIR));
+    bot.onText(/\/minhaj_thalibin/, (msg) => handleQuiz(msg, bot, process.env.MINHAJ_THALIBIN));
 }
 module.exports = { initializeCommands };
