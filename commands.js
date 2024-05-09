@@ -107,11 +107,6 @@ async function handleQuiz(msg, bot, url) {
     });
 }
 
-function handleIbnuAqil(msq, bot, url) {
-    handleQuiz(msq, bot, url)
-}
-
-
 // Tangani perintah "/help"
 function handleHelp(msg, bot) {
     const chatId = msg.chat.id;
@@ -121,6 +116,7 @@ function handleHelp(msg, bot) {
         "/help - Menampilkan daftar perintah",
         "/about - Menampilkan informasi tentang bot",
         "/device - Menampilkan spesifikasi perangkat",
+        "/tematik - Tematik Alquran",
         "/ibnu_aqil",
         "/tafsir_munir"
         // Tambahkan perintah lain di sini
@@ -137,7 +133,8 @@ function initializeCommands(bot) {
     bot.onText(/\/about/, (msg) => handleAbout(msg, bot));
     bot.onText(/\/help/, (msg) => handleHelp(msg, bot));
     bot.onText(/\/device/, (msg) => handleDevice(msg, bot));
-    bot.onText(/\/ibnu_aqil/, (msg) => handleIbnuAqil(msg, bot, process.env.IBNU_AQIL));
-    bot.onText(/\/tafsir_munir/, (msg) => handleIbnuAqil(msg, bot, process.env.TAFSIR_MUNIR));
+    bot.onText(/\/tematik/, (msg) => handleQuiz(msg, bot, process.env.TEMATIK));
+    bot.onText(/\/ibnu_aqil/, (msg) => handleQuiz(msg, bot, process.env.IBNU_AQIL));
+    bot.onText(/\/tafsir_munir/, (msg) => handleQuiz(msg, bot, process.env.TAFSIR_MUNIR));
 }
 module.exports = { initializeCommands };
